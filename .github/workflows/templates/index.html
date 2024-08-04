@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <title>Contact Manager</title>
+</head>
+<body>
+    <h1>Contact Manager</h1>
+    
+    <!-- Add Contact Form -->
+    <h2>Add Contact</h2>
+    <form action="{{ url_for('add_contact') }}" method="post">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="phone" placeholder="Phone Number" required>
+        <input type="text" name="email" placeholder="Email">
+        <input type="text" name="address" placeholder="Address">
+        <button type="submit">Add Contact</button>
+    </form>
+
+    <!-- Contact List -->
+    <h2>Contact List</h2>
+    <ul>
+        {% for contact in contacts %}
+            <li>
+                {{ contact.name }} - {{ contact.phone }}
+                <form action="{{ url_for('delete_contact', index=loop.index0) }}" method="post" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+                <form action="{{ url_for('update_contact', index=loop.index0) }}" method="post" style="display:inline;">
+                    <input type="text" name="name" placeholder="Name" value="{{ contact.name }}" required>
+                    <input type="text" name="phone" placeholder="Phone Number" value="{{ contact.phone }}" required>
+                    <input type="text" name="email" placeholder="Email" value="{{ contact.email }}">
+                    <input type="text" name="address" placeholder="Address" value="{{ contact.address }}">
+                    <button type="submit">Update</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
